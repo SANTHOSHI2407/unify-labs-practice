@@ -1,0 +1,75 @@
+<body>
+  <a href="#main" class="skip-link">Skip to Content</a>
+  
+  <header>
+    <nav class="navbar">
+      <h1>Santhoshi Portfolio</h1>
+      <input type="checkbox" id="menu-toggle">
+      <label for="menu-toggle" class="hamburger">&#9776;</label>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="about">
+      <h2>About Me</h2>
+      <article>
+        <img src="assets/profile.jpg" alt="Profile picture of Santhoshi">
+        <p>Professional bio goes here...</p>
+      </article>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <table>
+        <tr><th>Skill</th><th>Level</th></tr>
+        <tr><td>Python</td><td>Advanced</td></tr>
+        <tr><td>Flask</td><td>Intermediate</td></tr>
+        <tr><td>HTML/CSS</td><td>Advanced</td></tr>
+      </table>
+    </section>
+
+    <section id="projects">
+      <h2>Project Gallery</h2>
+      <figure>
+        <img src="assets/project1.png" alt="Project 1 screenshot">
+        <figcaption>Flask Web App</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/project2.png" alt="Project 2 screenshot">
+        <figcaption>Responsive Portfolio</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/project3.png" alt="Project 3 screenshot">
+        <figcaption>Python Data Tool</figcaption>
+      </figure>
+    </section>
+
+    <aside>
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#skills">View Skills</a></li>
+        <li><a href="#projects">See Projects</a></li>
+      </ul>
+    </aside>
+
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <form id="contactForm">
+        <label>Name:<input type="text" name="name" required></label>
+        <label>Email:<input type="email" name="email" required></label>
+        <label>Message:<textarea name="message" required></textarea></label>
+        <button type="submit" class="btn">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Santhoshi Portfolio</p>
+  </footer>
+</body>

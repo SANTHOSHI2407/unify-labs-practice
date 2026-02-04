@@ -1,0 +1,76 @@
+/* Accessibility */
+.skip-link {
+  position: absolute;
+  left: -999px;
+}
+.skip-link:focus {
+  left: 10px;
+  background: #000;
+  color: #fff;
+  padding: 5px;
+}
+
+/* Sticky Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Hamburger Menu */
+#menu-toggle { display: none; }
+.hamburger { display: none; cursor: pointer; }
+@media (max-width: 768px) {
+  .hamburger { display: block; }
+  .nav-links { display: none; }
+  #menu-toggle:checked + .hamburger + .nav-links { display: block; }
+}
+
+/* Smooth Scroll */
+html { scroll-behavior: smooth; }
+
+/* Dark Mode */
+:root {
+  --bg: #fff;
+  --text: #000;
+}
+.dark-mode {
+  --bg: #121212;
+  --text: #f0f0f0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Animated Buttons */
+.btn {
+  border: 2px solid transparent;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  border-image: linear-gradient(90deg, #ff00ff, #00ffff) 1;
+  transform: scale(1.05);
+}
+
+// Select the toggle button
+const toggleBtn = document.querySelector("#darkModeToggle");
+
+// Add click event
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
+// Add click animation
+document.querySelectorAll(".btn").forEach(button => {
+  button.addEventListener("click", () => {
+    button.classList.add("active");
+    setTimeout(() => button.classList.remove("active"), 300);
+  });
+});
