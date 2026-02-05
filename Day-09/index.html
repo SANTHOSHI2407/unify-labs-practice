@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Card Showcase</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Interactive Card Showcase</h1>
+  </header>
+
+  <main>
+    <!-- Responsive Grid of Cards -->
+    <section class="cards-container">
+
+      <!-- 3D Flip Card -->
+      <div class="card flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <h3>Flip Card</h3>
+            <p>Hover to reveal more</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>Back Side</h3>
+            <p>Hidden details revealed on flip.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Glassmorphism Card -->
+      <div class="card glass-card">
+        <h3>Glassmorphism Card</h3>
+        <p>Blurred background effect for modern style.</p>
+      </div>
+
+      <!-- Gradient Border Card -->
+      <div class="card gradient-card">
+        <h3>Gradient Border Card</h3>
+        <p>Animated gradient border adds dynamic style.</p>
+      </div>
+
+      <!-- Zoom Card -->
+      <div class="card zoom-card">
+        <figure>
+          <img src="https://via.placeholder.com/300x200" alt="Zoomable project image">
+          <figcaption>Hover to zoom in</figcaption>
+        </figure>
+      </div>
+
+      <!-- Progress Card -->
+      <div class="card progress-card">
+        <h3>Skill Progress</h3>
+        <p>Animated progress bar shows completion level.</p>
+        <footer>
+          <div class="progress-bar">
+            <div class="progress"></div>
+          </div>
+        </footer>
+      </div>
+
+    </section>
+
+    <!-- Accordion Section -->
+    <section class="accordion">
+      <h2>Accordion Example</h2>
+      <div>
+        <input type="checkbox" id="item1">
+        <label for="item1">Accordion Item 1</label>
+        <div class="content">
+          <p>Content for item 1 goes here.</p>
+        </div>
+      </div>
+      <div>
+        <input type="checkbox" id="item2">
+        <label for="item2">Accordion Item 2</label>
+        <div class="content">
+          <p>Content for item 2 goes here.</p>
+        </div>
+      </div>
+      <div>
+        <input type="checkbox" id="item3">
+        <label for="item3">Accordion Item 3</label>
+        <div class="content">
+          <p>Content for item 3 goes here.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Interactive Showcase</p>
+  </footer>
+
+</body>
+</html>
