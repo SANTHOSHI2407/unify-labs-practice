@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Portfolio</title>
+
+</head>
+<body>
+  <!-- Particle Background -->
+  <div class="particles">
+    <!-- Generate 20 particles -->
+    <script>
+      for(let i=0;i<20;i++){
+        let p=document.createElement('div');
+        p.className='particle';
+        p.style.top=Math.random()*100+'%';
+        p.style.left=Math.random()*100+'%';
+        p.style.animationDuration=(5+Math.random()*10)+'s';
+        document.querySelector('.particles').appendChild(p);
+      }
+    </script>
+  </div>
+
+  <!-- Headline -->
+  <h1>Unify Labs</h1>
+  <h2>Creative css styles</h2>
+
+  <!-- Notify Me Button -->
+  <button class="notify-btn" onclick="openModal()">Notify Me</button>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3>Stay Updated!</h3>
+      <p>Enter your email to get notified.</p>
+      <input type="email" placeholder="Your Email">
+      <button class="notify-btn">Submit</button>
+    </div>
+  </div>
+
+  <!-- Gallery -->
+  <div class="gallery">
+    <img src="https://via.placeholder.com/400x300" alt="Project 1">
+    <img src="https://via.placeholder.com/400x500" alt="Project 2">
+    <img src="https://via.placeholder.com/400x250" alt="Project 3">
+    <img src="https://via.placeholder.com/400x400" alt="Project 4">
+    <img src="https://via.placeholder.com/400x350" alt="Project 5">
+    <img src="https://via.placeholder.com/400x450" alt="Project 6">
+  </div>
+
+  <script>
+    function openModal(){
+      document.getElementById('modal').style.display='flex';
+    }
+    function closeModal(){
+      document.getElementById('modal').style.display='none';
+    }
+  </script>
+</body>
+</html>
