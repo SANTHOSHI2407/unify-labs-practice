@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semantic & Performance Demo</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card fade-slide">
+      <h1 id="home">Welcome to Semantic Demo</h1>
+      <img src="https://via.placeholder.com/600x300/007bff/ffffff?text=Sample+Image" alt="Blue-themed website header illustration showing modern web design elements like code snippets and responsive layouts.">
+      
+      <h2 id="about">About Performance Features</h2>
+      <p>This page demonstrates optimized CSS with root variables, performant animations, and accessibility.</p>
+      
+      <h3>Interactive Elements</h3>
+      <p>Click the icons below:</p>
+      <button class="icon-btn heart" aria-label="Like this post" aria-pressed="false">Like</button>
+      <button class="icon-btn share" aria-label="Share this content">Share</button>
+    </section>
+
+    <section class="card fade-slide">
+      <h3>Sticky Navigation Test</h3>
+      <p>Scroll up to see the header stick. Tested for Chrome, Firefox, Safari, Edge stability.</p>
+      <div style="height: 2000px; background: linear-gradient(var(--primary-color), var(--success-color)); margin: 2rem 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">Scroll down for more content...</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Demo Site</p>
+  </footer>
+
+  <script>
+    // Simple intersection observer for animation trigger (performance-friendly)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    });
+
+    document.querySelectorAll('.fade-slide').forEach(el => observer.observe(el));
+
+    // Toggle aria-pressed for like button
+    document.querySelector('[aria-label="Like this post"]').addEventListener('click', (e) => {
+      e.target.toggleAttribute('aria-pressed');
+    });
+  </script>
+</body>
+</html>
