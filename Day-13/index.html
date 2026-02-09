@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Variables & Math</title>
+ 
+</head>
+<body>
+    <h1>JavaScript Variables & Math (Interactive)</h1>
+    <div id="welcome"></div>
+    <div id="math-results" class="result"></div>
+    <button onclick="recalculate()">Recalculate</button>
+    
+    <script>
+        // Function to get inputs and calculate
+        function calculateMath() {
+            // User name variable with prompt for input
+            let userName = prompt("Enter your name:");
+            if (userName === null) userName = "Student";  // Default if canceled
+
+            // Number variables with prompts
+            let num1 = parseFloat(prompt("Enter first number:"));
+            let num2 = parseFloat(prompt("Enter second number:"));
+
+            if (isNaN(num1)) num1 = 10;  // Defaults
+            if (isNaN(num2)) num2 = 3;
+
+            // Math calculations using let for block scope
+            let sum = num1 + num2;
+            let product = num1 * num2;
+            let remainder = num1 % num2;
+
+            // Concatenate welcome message (template literals)
+            let welcomeMessage = `Welcome, ${userName}! Here's the math for ${num1} and ${num2}:`;
+
+            // Update display
+            document.getElementById('welcome').innerHTML = `<h2>${welcomeMessage}</h2>`;
+            document.getElementById('math-results').innerHTML = `
+                <p><strong>Sum:</strong> ${sum}</p>
+                <p><strong>Product:</strong> ${product}</p>
+                <p><strong>Remainder:</strong> ${remainder}</p>
+            `;
+        }
+
+        // Initial run
+        calculateMath();
+
+        // Recalculate on button click
+        function recalculate() {
+            calculateMath();
+        }
+    </script>
+</body>
+</html>
