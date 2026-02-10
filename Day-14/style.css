@@ -1,0 +1,90 @@
+    <style>
+        /* Import Google font - Poppins */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .wrapper {
+            padding: 30px 40px;
+            border-radius: 12px;
+            background: #fff;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+        .wrapper header {
+            font-size: 24px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .guess {
+            font-size: 20px;
+            color: #333;
+            margin: 20px 0;
+            min-height: 30px;
+        }
+        .input-field {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .input-field input {
+            flex: 1;
+            height: 50px;
+            padding: 0 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-field input:focus {
+            border-color: #4a98f7;
+        }
+        .input-field input:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+        .input-field button {
+            height: 50px;
+            padding: 0 25px;
+            border: none;
+            background: #4a98f7;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+        .input-field button:hover:not(:disabled) {
+            background: #357abd;
+        }
+        .input-field button:active {
+            transform: scale(0.98);
+        }
+        .chances {
+            font-weight: 600;
+            color: #e74c3c;
+        }
+        .game-over {
+            color: #e74c3c !important;
+            font-size: 22px;
+        }
+        .win {
+            color: #27ae60 !important;
+        }
+    </style>
