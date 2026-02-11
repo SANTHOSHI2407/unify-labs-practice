@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Core v1.0</title>
+
+</head>
+<body>
+    <div id="output"></div>
+    <input type="text" id="commandInput" placeholder="Enter command..." autofocus>
+    <button onclick="submitCommand()">EXECUTE</button>
+
+    <script>
+        let balance = 1000;
+        let attempts = 0;
+        let maxAttempts = 3;
+        let masterPin = "1234";
+        let inBank = false;
+        let inShop = false;
+        let inVault = false;
+        let secretWord = "HACKER";
+        let secretMessage = "🔓 ACCESS GRANTED! Hidden link: http://virtualcore.hidden/flag{VC0R3_M4573R}";
+        let currentInputCallback = null;
+
+        const output = document.getElementById('output');
+        const input = document.getElementById('commandInput');
+
+        function print(text) {
+            output.textContent += text + '\n';
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearInput() {
+            input.value = '';
+            input.focus();
+        }
+
+        function bootSequence() {
+            print('====================================');
+            print('    INITIALIZING VIRTUAL CORE v1.0  ');
+            print('====================================');
+            print('');
+            print('SECURITY PROTOCOL ACTIVE');
+            print('ENTER MASTER PIN:');
+            
+            currentInputCallback = handleLogin;
+            input.focus();
+        }
+
+        function handleLogin(pin) {
+            attempts++;
+            if (pin === masterPin) {
+                print('\n✓ PIN AUTHENTICATED');
+                print('');
+                showWelcomeBanner();
+                startMainLoop();
+            } else {
+                print('✗ INVALID PIN - Attempt ' + attempts + '/' + maxAttempts);
+                if (attempts >= maxAttempts) {
+                    print('\n🚨 SYSTEM SELF-DESTRUCT SEQUENCE INITIATED');
+                    print('💥 BOOM! Virtual Core Terminated.');
+                    input.disabled = true;
+                    return;
+                }
+                print('ENTER MASTER PIN:');
+            }
+            clearInput();
+        }
+
+        function showWelcomeBanner() {
+            print('╔════════════════════════════════════╗');
+            print('║         Welcome to                 ║');
+            print('║      Virtual Core v1.0             ║');
+            print('║                                    ║');
+            print('║  [V-CORE]> Type command:           ║');
+            print('╚════════════════════════════════════╝');
+            print('');
+        }
+
+        function startMainLoop() {
+            currentInputCallback = handleMainCommand;
+            print('[V-CORE]> Type command: (bank, shop, vault, exit)');
+            clearInput();
+        }
+
+        function handleMainCommand(cmd) {
+            cmd = cmd.toLowerCase().trim();
+            
+            switch(cmd) {
+                case 'bank':
+                    inBank = true;
+                    print('\n=== BANKING KERNEL ACTIVE ===');
+                    print('Commands: deposit, withdraw, balance, back');
+                    print('BANK> ');
+                    currentInputCallback = handleBankCommand;
+                    break;
+        
+                case 'shop':
+                    inShop = true;
+                    print('\n=== SMART SHOP ACTIVE ===');
+                    print('Enter quantity of items (UNIT_PRICE = 50):');
+                    currentInputCallback = handleShopQuantity;
+                    break;
+                    
+                case 'vault':
+                    inVault = true;
+                    print('\n=== SECURE VAULT ===');
+                    print('Guess the secret word (Hint: 6 letters, cyber term)');
+                    currentInputCallback = handleVaultGuess;
+                    break;
+                    
+                case 'exit':
+                    print('\n👋 Virtual Core Shutdown. Goodbye!');
+                    input.disabled = true;
+                    break;
+                    
+                default:
+                    print('[V-CORE]> Unknown command. Use: bank, shop, vault, exit');
+                    print('[V-CORE]> ');
+            }
+            clearInput();
+        }
+
+        function handleBankCommand(cmd) {
+            cmd = cmd.toLowerCase().trim();
+            
+            switch(cmd) {
+                case 'deposit':
+                    print('Enter deposit amount:');
+                    currentInputCallback = handleDeposit;
+                    break;
+                    
+                case 'withdraw':
+                    print('Enter withdrawal amount:');
+                    currentInputCallback = handleWithdraw;
+                    break;
+                    
+                case 'balance':
+                    print('Current Balance: $' + balance.toFixed(2));
+                    print('BANK> ');
+                    break;
+                    
+                case 'back':
+                    inBank = false;
+                    print('\nReturning to main menu...');
+                    startMainLoop();
+                    break;
+                    
+                default:
+                    print('BANK> Invalid command. Use: deposit, withdraw, balance, back');
+            }
+            clearInput();
+        }
+
+        function handleDeposit(amountStr) {
+            let amount = parseFloat(amountStr);
+            if (isNaN(amount) || amount <= 0) {
+                print('Invalid amount. Enter positive number.');
+            } else {
+                balance += amount;
+                print('Deposited: $' + amount.toFixed(2));
+                print('New Balance: $' + balance.toFixed(2));
+            }
+            print('BANK> ');
+            currentInputCallback = handleBankCommand;
+            clearInput();
+        }
+
+        function handleWithdraw(amountStr) {
+            let amount = parseFloat(amountStr);
+            if (isNaN(amount) || amount <= 0) {
+                print('Invalid amount. Enter positive number.');
+            } else if (amount > balance) {
+                print('❌ INSUFFICIENT FUNDS');
+                print('Current Balance: $' + balance.toFixed(2));
+            } else {
+                balance -= amount;
+                print('Withdrew: $' + amount.toFixed(2));
+                print('New Balance: $' + balance.toFixed(2));
+            }
+            print('BANK> ');
+            currentInputCallback = handleBankCommand;
+            clearInput();
+        }
+
+        function handleShopQuantity(qtyStr) {
+            let qty = parseInt(qtyStr);
+            if (isNaN(qty) || qty <= 0) {
+                print('Invalid quantity. Enter positive integer.');
+                print('Enter quantity:');
+                return;
+            }
+
+            let unitPrice = 50;
+            let subtotal = qty * unitPrice;
+            let discount = 0;
+
+            if (qty >= 11) {
+                discount = 0.20;
+            } else if (qty >= 6) {
+                discount = 0.10;
+            }
+
+            let discountAmount = subtotal * discount;
+            let finalPrice = subtotal - discountAmount;
+
+            print(`Quantity: ${qty}`);
+            print(`Subtotal: $${subtotal.toFixed(2)}`);
+            print(`Discount (${discount*100}%): -$${discountAmount.toFixed(2)}`);
+            print(`Final Price: $${finalPrice.toFixed(2)}`);
+
+            if (finalPrice > balance) {
+                print('❌ INSUFFICIENT FUNDS');
+            } else {
+                balance -= finalPrice;
+                print('✅ Purchase successful!');
+                print('New Balance: $' + balance.toFixed(2));
+            }
+
+            print('\nReturning to main menu...');
+            inShop = false;
+            startMainLoop();
+            clearInput();
+        }
+
+        function handleVaultGuess(guess) {
+            if (guess.toUpperCase() === secretWord) {
+                print('\n🎉 CORRECT!');
+                print(secretMessage);
+            } else {
+                print('❌ Wrong guess. Returning to main menu...');
+            }
+            inVault = false;
+            startMainLoop();
+            clearInput();
+        }
+
+        function submitCommand() {
+            if (!currentInputCallback || input.disabled) return;
+            
+            let cmd = input.value.trim();
+            if (cmd) {
+                currentInputCallback(cmd);
+            }
+        }
+
+        // Enter key support
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitCommand();
+            }
+        });
+
+        // Start the system
+        bootSequence();
+    </script>
+</body>
+</html>
