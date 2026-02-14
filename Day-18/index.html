@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Pet</title>
+
+</head>
+<body>
+    <div class="pet-container">
+        <h1>My Virtual Pet</h1>
+        <div class="pet-info">
+            <div>Name: <span id="petName"></span></div>
+            <div>Type: <span id="petType"></span></div>
+            <div class="health-bar">
+                <div id="healthFill" class="health-fill" style="width: 50%;"></div>
+            </div>
+            <div>Health: <span id="petHealth">50</span>/100</div>
+        </div>
+        <button onclick="myPet.feed()">Feed</button>
+        <button onclick="myPet.play()">Play</button>
+        <button onclick="myPet.getStatus()">Status</button>
+        <div id="statusMsg" class="status"></div>
+    </div>
+
+</body>
+</html>
