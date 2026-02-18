@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Module with Data Persistence</title>
+</head>
+<body>
+    <div class="settings-container">
+        <h1>⚙️ Settings</h1>
+        
+        <div class="setting-group">
+            <label>Appearance</label>
+            <div class="theme-toggle">
+                <span>Light</span>
+                <div class="toggle-switch" id="themeToggle">
+                    <div class="toggle-knob"></div>
+                </div>
+                <span>Dark</span>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <label>Settings Actions</label>
+            <button id="saveBtn">💾 Save Settings</button>
+            <button id="loadBtn">📂 Load Settings</button>
+            <button id="resetBtn">🔄 Reset to Default</button>
+        </div>
+        
+        <div id="status" class="status"></div>
+    </div>
+
+</body>
+</html>
