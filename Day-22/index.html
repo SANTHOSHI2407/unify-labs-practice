@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Project Nexus</title>
+
+</head>
+
+<body>
+
+<div class="header">
+    <h1>PROJECT NEXUS</h1>
+    <div class="controls">
+        <input type="text" id="search" placeholder="Search coins...">
+        <select>
+            <option>Price ₹</option>
+        </select>
+    </div>
+</div>
+
+<div class="cards" id="cards"></div>
+
+<script>
+const coins = [
+    { name: "Dogecoin", price: "₹ 9.05" },
+    { name: "Canton", price: "₹ 15.16" },
+    { name: "TRON", price: "₹ 25.37" },
+    { name: "Cardano", price: "₹ 25.45" },
+    { name: "USDS", price: "₹ 90.62" },
+    { name: "Ethena USD", price: "₹ 90.62" },
+    { name: "Tether", price: "₹ 90.67" },
+    { name: "USDC", price: "₹ 90.70" },
+    { name: "Figure Heloc", price: "₹ 93.54" }
+];
+
+const cardsContainer = document.getElementById("cards");
+const searchInput = document.getElementById("search");
+
+function displayCoins(list) {
+    cardsContainer.innerHTML = "";
+    list.forEach(coin => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <h3>${coin.name}</h3>
+            <div class="price">${coin.price}</div>
+            <button onclick="addFavorite('${coin.name}')">+ Add Favorite</button>
+        `;
+        cardsContainer.appendChild(card);
+    });
+}
+
+function addFavorite(name) {
+    alert(name + " added to favorites!");
+}
+
+searchInput.addEventListener("input", () => {
+    const value = searchInput.value.toLowerCase();
+    const filtered = coins.filter(c =>
+        c.name.toLowerCase().includes(value)
+    );
+    displayCoins(filtered);
+});
+
+displayCoins(coins);
+</script>
+
+</body>
+</html>
