@@ -1,0 +1,34 @@
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f8;
+            padding: 40px;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            cursor: pointer;
+            border: none;
+            background: #007bff;
+            color: white;
+            font-size: 15px;
+        }
+        button:hover {
+            background: #005fd4;
+        }
+        pre {
+            background: #eef2ff;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+s
