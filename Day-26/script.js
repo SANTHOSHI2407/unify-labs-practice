@@ -1,21 +1,29 @@
-<script>
-async function fetchProducts() {
-    try {
-        const response = await fetch("/products");
-        const products = await response.json();
-
-        const table = document.getElementById("productTable");
-        table.innerHTML = "";
-
-        products.forEach(p => {
-            let row = table.insertRow();
-            row.insertCell(0).innerText = p.name;
-            row.insertCell(1).innerText = p.category;
-            row.insertCell(2).innerText = p.price;
-            row.insertCell(3).innerText = p.stock;
-        });
-    } catch (error) {
-        alert("Error fetching products");
-    }
+function copy(text) {
+  navigator.clipboard.writeText(text).catch(() => {});
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1800);
 }
-</script>
+
+function runDemo() {
+  const log    = document.getElementById('logLine');
+  const pulse  = document.getElementById('pulse');
+  const label  = document.getElementById('connLabel');
+  const connDb = document.getElementById('connDb');
+
+  // Reset state
+  log.classList.remove('visible');
+  pulse.style.background = 'var(--amber)';
+  label.style.color      = 'var(--amber)';
+  label.textContent      = 'Connecting…';
+  connDb.textContent     = '—';
+
+  // Simulate connection delay
+  setTimeout(() => {
+    log.classList.add('visible');
+    pulse.style.background = 'var(--green)';
+    label.style.color      = 'var(--green)';
+    label.textContent      = 'Connected';
+    connDb.textContent     = 'default db · port 27017';
+  }, 900);
+}

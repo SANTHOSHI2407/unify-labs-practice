@@ -1,29 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Unify Labs Product List</title>
-  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MongoDB Connection — db.js</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Unify Labs Product List</h2>
+<header>
+  <h1>MongoDB Connection Setup</h1>
+  <p>Project scaffold · db.js · MongoClient · localhost:27017</p>
+</header>
 
-<button onclick="fetchProducts()">Fetch Products</button>
+<!-- Step 1 & 2: Init commands -->
+<div class="card">
+  <div class="card-header">
+    <div class="dot dot-r"></div>
+    <div class="dot dot-a"></div>
+    <div class="dot dot-g"></div>
+    <span class="title">STEP 1 — Project Init</span>
+    <span class="badge">Terminal</span>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Initialize npm project</div>
+        <div class="step-cmd" onclick="copy('npm init -y')">$ npm init -y</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Install MongoDB driver</div>
+        <div class="step-cmd" onclick="copy('npm install mongodb')">$ npm install mongodb</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Create the connection file</div>
+        <div class="step-cmd" onclick="copy('touch db.js')">$ touch db.js</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Stock</th>
-        </tr>
-    </thead>
-    <tbody id="productTable"></tbody>
-</table>
+<!-- db.js code -->
+<div class="card">
+  <div class="card-header">
+    <div class="dot dot-r"></div>
+    <div class="dot dot-a"></div>
+    <div class="dot dot-g"></div>
+    <span class="title">db.js — Connection Logic</span>
+    <span class="badge">JavaScript</span>
+  </div>
+  <div class="code-wrap">
+    <pre><span class="cmt">// db.js — MongoDB connection module</span>
 
+<span class="kw">const</span> <span class="var">{ MongoClient }</span> = <span class="fn">require</span>(<span class="str">'mongodb'</span>);
 
+<span class="kw">const</span> <span class="var">uri</span>    = <span class="str">'mongodb://localhost:27017'</span>;
+<span class="kw">const</span> <span class="var">client</span> = <span class="kw">new</span> <span class="fn">MongoClient</span>(<span class="var">uri</span>);
 
+<span class="kw">async function</span> <span class="fn">connectDB</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">await</span> <span class="var">client</span>.<span class="fn">connect</span>();
+    <span class="var">console</span>.<span class="fn">log</span>(<span class="str">'Database connected successfully'</span>);
+    <span class="kw">return</span> <span class="var">client</span>.<span class="fn">db</span>();       <span class="cmt">// returns default db</span>
+  } <span class="kw">catch</span> (<span class="var">err</span>) {
+    <span class="var">console</span>.<span class="fn">error</span>(<span class="str">'Connection failed:'</span>, <span class="var">err</span>.<span class="var">message</span>);
+    <span class="var">process</span>.<span class="fn">exit</span>(<span class="num">1</span>);
+  }
+}
+
+<span class="var">module</span>.<span class="var">exports</span> = { <span class="var">connectDB</span>, <span class="var">client</span> };</pre>
+  </div>
+</div>
+
+<!-- Terminal output mock -->
+<div class="card">
+  <div class="card-header">
+    <div class="dot dot-r"></div>
+    <div class="dot dot-a"></div>
+    <div class="dot dot-g"></div>
+    <span class="title">Terminal Output</span>
+    <button class="btn-run" onclick="runDemo()">▶ Run</button>
+  </div>
+  <div class="terminal">
+    <div class="line">
+      <span class="prompt">$</span>
+      <span class="cmd-text">node db.js</span>
+    </div>
+    <div class="log-line" id="logLine">
+      <span class="log-icon">✔</span>
+      <span class="log-text">Database connected successfully</span>
+      <span class="log-sub">mongodb://localhost:27017 · 18ms</span>
+    </div>
+  </div>
+</div>
+
+<!-- Connection status bar -->
+<div class="card">
+  <div class="card-header">
+    <div class="dot dot-r"></div>
+    <div class="dot dot-a"></div>
+    <div class="dot dot-g"></div>
+    <span class="title">Connection Status</span>
+    <span class="badge">Live</span>
+  </div>
+  <div class="conn-bar">
+    <div class="conn-status">
+      <div class="pulse" id="pulse" style="background:var(--muted)"></div>
+      <span id="connLabel" style="color:var(--muted)">Idle</span>
+    </div>
+    <span class="conn-url" id="connUrl">mongodb://localhost:27017</span>
+    <span class="conn-db" id="connDb">—</span>
+  </div>
+</div>
+
+<div class="copied-toast" id="toast">Copied!</div>
+
+<script src="script.js"></script>
 </body>
 </html>
