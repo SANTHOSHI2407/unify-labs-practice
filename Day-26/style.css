@@ -1,0 +1,39 @@
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background: #1a3cff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 70%;
+        }
+
+        th {
+            background: #1a3cff;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+    </style>
