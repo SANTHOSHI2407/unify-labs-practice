@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product API — MongoDB CRUD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+
+  <header>
+    <div class="logo">⬡ ProductAPI</div>
+    <div class="badge">MongoDB · Express · Node</div>
+  </header>
+
+  <main>
+
+    <!-- Server Code Panel -->
+    <section class="code-panel">
+      <div class="panel-label">server.js — Backend Source</div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="file-name">Route Foundation</span>
+        </div>
+        <pre><code><span class="kw">const</span> express = <span class="fn">require</span>(<span class="str">'express'</span>);
+<span class="kw">const</span> mongoose = <span class="fn">require</span>(<span class="str">'mongoose'</span>);
+<span class="kw">const</span> app = <span class="fn">express</span>();
+
+<span class="cm">// ── Middleware ───────────────────────────────────</span>
+app.<span class="fn">use</span>(express.<span class="fn">json</span>());
+
+<span class="cm">// ── MongoDB Connection ───────────────────────────</span>
+mongoose.<span class="fn">connect</span>(<span class="str">'mongodb://localhost:27017/productdb'</span>)
+  .<span class="fn">then</span>(() =&gt; console.<span class="fn">log</span>(<span class="str">'✔ MongoDB connected'</span>))
+  .<span class="fn">catch</span>(err =&gt; console.<span class="fn">error</span>(err));
+
+<span class="cm">// ── Schema & Model ───────────────────────────────</span>
+<span class="kw">const</span> productSchema = <span class="kw">new</span> mongoose.<span class="fn">Schema</span>({
+  name:  { type: <span class="ty">String</span>,  required: <span class="bl">true</span> },
+  price: { type: <span class="ty">Number</span>,  required: <span class="bl">true</span> },
+  stock: { type: <span class="ty">Number</span>,  required: <span class="bl">true</span> },
+});
+<span class="kw">const</span> Product = mongoose.<span class="fn">model</span>(<span class="str">'Product'</span>, productSchema);</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="file-name">POST — Create Product</span>
+        </div>
+        <pre><code>app.<span class="fn">post</span>(<span class="str">'/products'</span>, <span class="kw">async</span> (req, res) =&gt; {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> { name, price, stock } = req.body;
+    <span class="kw">const</span> product = <span class="kw">new</span> <span class="fn">Product</span>({ name, price, stock });
+    <span class="kw">await</span> product.<span class="fn">save</span>();
+    res.<span class="fn">status</span>(<span class="nu">201</span>).<span class="fn">json</span>(product);
+  } <span class="kw">catch</span> (err) {
+    res.<span class="fn">status</span>(<span class="nu">400</span>).<span class="fn">json</span>({ error: err.message });
+  }
+});</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="file-name">PATCH — Update Stock Only</span>
+        </div>
+        <pre><code>app.<span class="fn">patch</span>(<span class="str">'/products/:id'</span>, <span class="kw">async</span> (req, res) =&gt; {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> { stock } = req.body;
+    <span class="kw">const</span> product = <span class="kw">await</span> Product.<span class="fn">findByIdAndUpdate</span>(
+      req.params.id,
+      { $set: { stock } },      <span class="cm">// only stock is updated</span>
+      { new: <span class="bl">true</span>, runValidators: <span class="bl">true</span> }
+    );
+    <span class="kw">if</span> (!product) <span class="kw">return</span> res.<span class="fn">status</span>(<span class="nu">404</span>).<span class="fn">json</span>({ error: <span class="str">'Not found'</span> });
+    res.<span class="fn">json</span>(product);
+  } <span class="kw">catch</span> (err) {
+    res.<span class="fn">status</span>(<span class="nu">400</span>).<span class="fn">json</span>({ error: err.message });
+  }
+});</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="file-name">DELETE — Remove by ID</span>
+        </div>
+        <pre><code>app.<span class="fn">delete</span>(<span class="str">'/products/:id'</span>, <span class="kw">async</span> (req, res) =&gt; {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> product = <span class="kw">await</span> Product.<span class="fn">findByIdAndDelete</span>(req.params.id);
+    <span class="kw">if</span> (!product) <span class="kw">return</span> res.<span class="fn">status</span>(<span class="nu">404</span>).<span class="fn">json</span>({ error: <span class="str">'Not found'</span> });
+    res.<span class="fn">json</span>({ message: <span class="str">'Product deleted'</span>, id: product._id });
+  } <span class="kw">catch</span> (err) {
+    res.<span class="fn">status</span>(<span class="nu">500</span>).<span class="fn">json</span>({ error: err.message });
+  }
+});
+
+app.<span class="fn">listen</span>(<span class="nu">3000</span>, () =&gt; console.<span class="fn">log</span>(<span class="str">'Server on port 3000'</span>));</code></pre>
+      </div>
+    </section>
+
+    <!-- Interactive Tester Panel -->
+    <section class="tester-panel">
+      <div class="panel-label">API Tester — Simulated Requests</div>
+
+      <div class="tester-tabs">
+        <button class="tab active" data-tab="post">POST</button>
+        <button class="tab" data-tab="patch">PATCH</button>
+        <button class="tab" data-tab="delete">DELETE</button>
+      </div>
+
+      <!-- POST Form -->
+      <div class="tab-content active" id="tab-post">
+        <p class="route-line"><span class="method post">POST</span> <span class="url">/products</span></p>
+        <p class="desc">Create a new product with name, price, and stock.</p>
+        <div class="form-group">
+          <label>name</label>
+          <input type="text" id="p-name" placeholder="e.g. Wireless Mouse" />
+        </div>
+        <div class="form-group">
+          <label>price</label>
+          <input type="number" id="p-price" placeholder="e.g. 29.99" />
+        </div>
+        <div class="form-group">
+          <label>stock</label>
+          <input type="number" id="p-stock" placeholder="e.g. 150" />
+        </div>
+        <button class="btn btn-post" onclick="runPost()">Send Request</button>
+      </div>
+
+      <!-- PATCH Form -->
+      <div class="tab-content" id="tab-patch">
+        <p class="route-line"><span class="method patch">PATCH</span> <span class="url">/products/:id</span></p>
+        <p class="desc">Update only the stock field for a product by ID.</p>
+        <div class="form-group">
+          <label>Product ID</label>
+          <input type="text" id="pa-id" placeholder="e.g. 64b3f..." />
+        </div>
+        <div class="form-group">
+          <label>new stock</label>
+          <input type="number" id="pa-stock" placeholder="e.g. 80" />
+        </div>
+        <button class="btn btn-patch" onclick="runPatch()">Send Request</button>
+      </div>
+
+      <!-- DELETE Form -->
+      <div class="tab-content" id="tab-delete">
+        <p class="route-line"><span class="method delete">DELETE</span> <span class="url">/products/:id</span></p>
+        <p class="desc">Permanently remove a product document by its MongoDB ObjectId.</p>
+        <div class="form-group">
+          <label>Product ID</label>
+          <input type="text" id="d-id" placeholder="e.g. 64b3f..." />
+        </div>
+        <button class="btn btn-delete" onclick="runDelete()">Send Request</button>
+      </div>
+
+      <!-- Response Output -->
+      <div class="response-box">
+        <div class="res-header">
+          <span>Response</span>
+          <span class="status-badge" id="status-badge"></span>
+        </div>
+        <pre id="response-output">// Click "Send Request" to simulate a response...</pre>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Route Summary Cards -->
+  <section class="summary">
+    <div class="card">
+      <div class="card-method post">POST</div>
+      <div class="card-route">/products</div>
+      <div class="card-desc">Accepts <code>{name, price, stock}</code> in request body. Validates and saves a new Product document to MongoDB. Returns <code>201</code> on success.</div>
+    </div>
+    <div class="card">
+      <div class="card-method patch">PATCH</div>
+      <div class="card-route">/products/:id</div>
+      <div class="card-desc">Accepts <code>{stock}</code> only. Uses <code>$set</code> to update only the stock field. Ignores all other fields. Returns updated document.</div>
+    </div>
+    <div class="card">
+      <div class="card-method delete">DELETE</div>
+      <div class="card-route">/products/:id</div>
+      <div class="card-desc">Finds document by <code>_id</code> and removes it. Returns <code>404</code> if not found, confirmation object on success.</div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
